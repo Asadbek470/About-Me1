@@ -5,200 +5,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../public/contact.html">
+  <!-- Modern Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <title>About me</title>
-
-  <script>
-  (function () {
-    // Скрываем контент как можно раньше
-    var css = document.createElement('style');
-    css.id = 'gate-css';
-    css.textContent = 'body{visibility:hidden}';
-    document.head.appendChild(css);
-
-    // Запрашиваем пароль после загрузки DOM
-    function ask() {
-      var pass = prompt('Введите пароль для входа:');
-      if (pass === null) {
-        ask();
-        return;
-      }
-      if (pass === '123456') {
-        document.body.style.visibility = 'visible';
-        var el = document.getElementById('gate-css');
-        if (el) el.remove();
-      } else {
-        alert('Неверный пароль. Попробуйте снова.');
-        ask();
-      }
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(120deg, #232526, #414345, #1a2980, #26d0ce);
+      background-size: 200% 200%;
+      animation: gradientMove 12s ease infinite;
+      overflow-x: hidden;
     }
-
-    window.addEventListener('DOMContentLoaded', ask);
-  })();
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    #matrix {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      mix-blend-mode: lighten;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 40px 0;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 32px;
+      max-width: 800px;
+      width: 90%;
+      margin-bottom: 32px;
+    }
+    h1.rainbow {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #ff512f, #dd2476, #1fa2ff, #fbc2eb, #a1c4fd);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: flow 5s linear infinite;
+      background-size: 400% 100%;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      margin-bottom: 16px;
+    }
+    @keyframes flow {
+      0% {background-position: 0%;}
+      100% {background-position: 100%;}
+    }
+    .fire {
+      font-size: 2.2rem;
+      color: #ff9800;
+      text-shadow: 0 0 8px #ff0, 0 0 16px #f00, 0 0 32px #f80, 0 0 64px #ff0;
+      animation: flicker 0.2s infinite alternate;
+      margin-bottom: 16px;
+    }
+    @keyframes flicker {
+      from { text-shadow: 0 0 8px #ff0, 0 0 16px #f00, 0 0 32px #f80, 0 0 64px #ff0; }
+      to   { text-shadow: 0 0 4px #ff0, 0 0 8px #f00, 0 0 16px #f80, 0 0 32px #ff0; }
+    }
+    .btn3d {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 14px 32px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 2px 0 #0d6efd;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin: 8px;
+      border: none;
+    }
+    .btn3d:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.3), 0 4px 0 #0d6efd;
+    }
+    .btn3d:active {
+      transform: translateY(2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 1px 0 #0d6efd;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: inherit;
+      margin-top: 24px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    thead th {
+      background: #232526;
+      color: #fff;
+      padding: 12px;
+      text-align: left;
+    }
+    tbody td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      background: rgba(255,255,255,0.18);
+      color: #232526;
+    }
+    footer {
+      margin-top: 32px;
+      color: #fff;
+      text-align: center;
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+    img {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      max-width: 320px;
+      margin: 16px 0;
+    }
+    /* Dark theme toggle */
+    body.dark {
+      background: #181818;
+      color: #eee;
+    }
+    body.dark .glass-card {
+      background: rgba(24,24,24,0.7);
+      color: #eee;
+    }
+    body.dark table {
+      background: rgba(24,24,24,0.7);
+    }
+    body.dark thead th {
+      background: #333;
+      color: #fff;
+    }
+    body.dark tbody td {
+      background: rgba(24,24,24,0.9);
+      color: #eee;
+    }
+  </style>
+  <script>
+    // Password gate
+    (function () {
+      var css = document.createElement('style');
+      css.id = 'gate-css';
+      css.textContent = 'body{visibility:hidden}';
+      document.head.appendChild(css);
+      function ask() {
+        var pass = prompt('Введите пароль для входа:');
+        if (pass === null) { ask(); return; }
+        if (pass === '0903') {
+          document.body.style.visibility = 'visible';
+          var el = document.getElementById('gate-css');
+          if (el) el.remove();
+        } else {
+          alert('Неверный пароль. Попробуйте снова.');
+          ask();
+        }
+      }
+      window.addEventListener('DOMContentLoaded', ask);
+    })();
   </script>
 </head>
-<body style="background-color: rgb(0, 0, 0);">
-  <u style="color: white;"><h1 style="color: rgb(0, 255, 0);">Welcome to my web site</h1></u>
-  <nav><img src="https://s0.rbk.ru/v6_top_pics/media/img/6/54/755689858401546.jpg" alt="g"></nav>
-  <footer style="color: blue;">Asadbek 2025</footer>
-  <main><h1 style="color: rgb(0, 249, 5);">About me</h1>
-  <hr>
-
-  <p style="color: rgb(2, 245, 2);">
-    Hi my Name is Asadbek Im 12 y old I can say i want to work in all works in the world!
-    you can say it so strange but i want it and my second usually work is business
-    I read a book how rich dad and poor dad there says what robert want to work 
-    on differents works he says its so interesting And I also want to try it!
-    <hr>
-  </p>
-
-  <img src="https://litmir.club/data/Author/272000/272964/%D0%A4%D0%BE%D1%82%D0%BE_%D0%9B%D0%BE%D1%85%D0%BC%D0%B0%D1%82%D1%8B%D0%B9_%D0%90%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC_2c0e0.jpg" alt="Me">
-  <br>
-<article><p style="color: blue;">My Photo</p></article>
-  <p style="color: rgb(2, 248, 47);">
-    I Have a question! Did you want to try Hacking 
-    This Site can help with them!
-    <hr>
-  </p>
-
-  <p style="color: rgb(4, 248, 28);">
-    🔑 Взлом ≠ всегда преступление
-    Есть "чёрные" хакеры (Black Hat), которые нарушают закон ради выгоды, и "белые" (White Hat) — специалисты по кибербезопасности, которые ищут уязвимости, чтобы компании их исправили.
-
-    🛡️ Самая частая причина взломов — слабые пароли
-    Пароли типа 123456, qwerty, password ломаются за секунды.
-
-    📱 Фишинг опаснее, чем хакерские программы
-    В большинстве случаев люди сами "отдают" данные, переходя по поддельным ссылкам или скачивая вирусные файлы.
-
-    🌍 Первый вирус появился в 1986 году
-    Он назывался Brain, его написали два брата из Пакистана.
-
-    💻 Хакеры часто используют социальную инженерию
-    Это не только взлом компьютеров, но и манипуляции людьми (например, позвонить и представиться техподдержкой).
-
-    ⚡ DDoS-атаки
-    Сайты иногда падают не из-за взлома базы данных, а потому что их "заваливают" миллионами запросов.
-
-    🚀 Хакерские атаки происходят каждую секунду
-    По статистике, в мире фиксируют тысячи попыток взлома ежесекундно.
-
-    🔒 Шифрование — главный враг хакеров
-    Чем лучше зашифрована информация (например, с помощью 2FA и современных алгоритмов), тем сложнее её украсть.
-  </p>
-<ol>
-  <li style="color: green;">push button</li>
-  <li style="color: green;">And hack</li>
-</ol>
-  <img src="https://d2qt3hjxf3fk7j.cloudfront.net/wp-content/uploads/2024/12/19181953/system-hacked-warning-alert-on-laptop1-1-400x200.jpg" alt="Hacking">
-  <br>
-
-  <button><a href="https://asadbek470.github.io/Hacking2.3.5/">Hacking</a></button>
-  <br>
-  <hr>
-
-  <p style="color: rgb(0, 252, 84);">
-    ТОП-10 самых известных взломов в истории:
-
-    Yahoo (2013–2014)<br>
-    🔓 Самый большой взлом аккаунтов: украли данные более 3 миллиардов пользователей (логины, пароли, e-mail).<br><br>
-
-    Equifax (2017)<br>
-    📂 Утекли личные данные 147 миллионов американцев: номера соцстраховок, адреса, даты рождения.<br><br>
-
-    Sony Pictures (2014)<br>
-    🎬 Хакеры взломали студию, слили фильмы и переписку сотрудников. Атака приписывается группе из Северной Кореи.<br><br>
-
-    PlayStation Network (2011)<br>
-    🎮 Украдены данные 77 миллионов игроков (включая данные карт). Сеть была отключена почти на месяц.<br><br>
-
-    Target (2013)<br>
-    🛒 Взломали сеть супермаркетов Target. Украли данные 40 миллионов банковских карт.<br><br>
-
-    Twitter (2020)<br>
-    🐦 Взломали аккаунты Илона Маска, Барака Обамы, Билла Гейтса и других — для мошенничества с биткойнами.<br><br>
-
-    Adult FriendFinder (2016)<br>
-    🔥 Утекло более 400 миллионов аккаунтов с личными данными пользователей.<br><br>
-
-    LinkedIn (2012)<br>
-    👔 Украли около 165 миллионов паролей пользователей.<br><br>
-
-    NASA (1999)<br>
-    🚀 15-летний подросток взломал NASA и скачал исходный код, управляющий МКС. Ущерб оценили в 41 тысячу $.<br><br>
-
-    WannaCry (2017)<br>
-    🦠 Массовая атака вируса-шифровальщика, заразившего более 230 тысяч компьютеров в 150 странах.<br><br>
-
-    ⚡ Эти истории показывают, что взломы могут затронуть миллионы людей и даже правительства.
-    <br>
-  <hr>
-  <button><a href="../public/contact.html">My number</a></button>
-  <p style="color: blue;">My phone number</p>
-  <footer><h1 style="color: green;">Asadbek 2025</h1>
-  <u style="color: white;">Thanks For Reading</u> </footer>
-  <style>
-  table{
-    width:100%; border-collapse:collapse; font-family:sans-serif;
-  }
-  thead th{
-    background:#222; color:#fff; padding:10px; text-align:left;
-  }
-  tbody td{
-    padding:10px; border:1px solid #ccc;
-    background:#fff; color:#000;
-  }
-</style>
-
-<h2>Самые лучшие искусственные интеллекты</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Название</th>
-      <th>Разработчик</th>
-      <th>Особенности</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>ChatGPT</td>
-      <td>OpenAI</td>
-      <td>Мультимодальный ассистент, сильный в диалогах и коде</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>DeepSeek</td>
-      <td>DeepSeek AI</td>
-      <td>Эффективный, хорош в коде и математике</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Gemini</td>
-      <td>Google</td>
-      <td>Понимает текст, изображения и видео</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Claude</td>
-      <td>Anthropic</td>
-      <td>Длинный контекст, аккуратный стиль общения</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Llama</td>
-      <td>Meta</td>
-      <td>Открытая модель, удобна для доработки</td>
-    </tr>
-  </tbody>
-</table>
-
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="container">
+    <div class="glass-card">
+      <h1 class="rainbow">Welcome To my website</h1>
+      <h1 class="fire">SECRET</h1>
+      <button onclick="document.body.classList.toggle('dark')" class="btn3d">🌙 Тема</button>
+      <p>
+        Hi my Name is Asadbek. I'm 12 y.o. I want to work in all jobs in the world!<br>
+        My second usual work is business. I read "Rich Dad Poor Dad" and Robert says it's interesting to try different jobs. I want to try it too!
+      </p>
+      <img src="https://img.moneytimes.ru/preview/article/4/8/5/76485_w.jpeg" alt="Me">
+      <article><p style="color: #2196f3;">My Photo</p></article>
+      <p>
+        I Have a question! Did you want to try Hacking? This Site can help with them!
+      </p>
+      <h1 class="fire" style="color: #00ff48;">Hacking</h1>
+      <button class="btn3d"><a href="https://asadbek470.github.io/Hacking2.3.5/" style="color:inherit;text-decoration:none;">Hacking</a></button>
+      <button class="btn3d"><a href="../public/contact.html" style="color:inherit;text-decoration:none;">My number</a></button>
+      <p style="color: #2196f3;">My phone number</p>
+      <hr>
+      <!-- Facts, table, etc. -->
+      <h2>Самые лучшие искусственные интеллекты</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Разработчик</th>
+            <th>Особенности</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>ChatGPT</td>
+            <td>OpenAI</td>
+            <td>Мультимодальный ассистент, сильный в диалогах и коде</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>DeepSeek</td>
+            <td>DeepSeek AI</td>
+            <td>Эффективный, хорош в коде и математике</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Gemini</td>
+            <td>Google</td>
+            <td>Понимает текст, изображения и видео</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Claude</td>
+            <td>Anthropic</td>
+            <td>Длинный контекст, аккуратный стиль общения</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Llama</td>
+            <td>Meta</td>
+            <td>Открытая модель, удобна для доработки</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="https://www.Youtube.com" class="btn3d">Youtube</a>
+      <a href="https://www.google.com" class="btn3d">Google</a>
+      <hr>
+      <footer>
+        <h1>Asadbek 2025</h1>
+        <u>Thanks For Reading</u>
+      </footer>
+    </div>
+    <iframe width="800" height="450" src="https://www.youtube.com/embed/numCkbbyzJk" title="АДЛИН — Dead Inside (официальная премьера трека)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="margin-top:32px;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.18);"></iframe>
+  </div>
+  <script>
+    // Matrix effect
+    const c = document.getElementById("matrix");
+    const ctx = c.getContext("2d");
+    function resizeMatrix() {
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+    }
+    resizeMatrix();
+    window.addEventListener('resize', resizeMatrix);
+    const letters = "101010101";
+    const fontSize = 16;
+    let columns = Math.floor(c.width / fontSize);
+    let drops = Array(columns).fill(1);
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > c.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 35);
+    window.addEventListener('resize', () => {
+      columns = Math.floor(c.width / fontSize);
+      drops = Array(columns).fill(1);
+    });
+  </script>
 </body>
 </html>
-</main>
-
-
-
   
